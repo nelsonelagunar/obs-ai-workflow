@@ -1,0 +1,77 @@
+[project]
+name = "obs-ai-workflow"
+version = "0.1.0-alpha"
+description = "Automated video editing workflow for OBS Studio on Linux with AI assistance"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "Nelson Laguna", email = "nelson.e.laguna.r@gmail.com"}
+]
+keywords = ["obs", "video", "editing", "ai", "whisper", "ffmpeg", "linux"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Video :: Conversion",
+]
+
+dependencies = [
+    "click>=8.1.0",
+    "rich>=13.0.0",
+    "obsws-python>=2.0.0",
+    "faster-whisper>=0.10.0",
+    "ffmpeg-python>=0.2.0",
+    "pyyaml>=6.0.0",
+]
+
+[project.optional-dependencies]
+gpu = [
+    "nvidia-cublas-cu12",
+    "nvidia-cudnn-cu12==9.*",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+]
+
+[project.scripts]
+obs-ai = "obs_ai.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/nelsonelagunar/obs-ai-workflow"
+Documentation = "https://github.com/nelsonelagunar/obs-ai-workflow/tree/main/docs"
+Repository = "https://github.com/nelsonelagunar/obs-ai-workflow"
+Issues = "https://github.com/nelsonelagunar/obs-ai-workflow/issues"
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311", "py312"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = ["E", "F", "W", "I", "N", "UP"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_functions = "test_*"
+addopts = "-v --cov=src/obs_ai --cov-report=term-missing"
